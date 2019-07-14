@@ -1,3 +1,5 @@
+// Package net contains helper function for handling
+// e.g. ip addresses or domain names
 package net
 
 import (
@@ -7,8 +9,9 @@ import (
 	"strings"
 )
 
-// URI = scheme:[//authority]path[?query][#fragment]
-type Uri struct {
+// URI struct representation
+// definition: URI = scheme:[//authority]path[?query][#fragment]
+type URI struct {
 	Scheme    string
 	Authority *Authority
 	Path      string
@@ -16,28 +19,32 @@ type Uri struct {
 	Fragment  string
 }
 
-// authority = [userinfo@]host[:port]
+// Authority struct representation
+// definition: authority = [userinfo@]host[:port]
 type Authority struct {
 	UserInfo string
 	Host     string
 	Port     uint16
 }
 
-func IsUrl(u string) bool {
+// IsURL returns true if string represents a valid URL
+func IsURL(u string) bool {
 	if IsIPAddr(u) || IsNetwork(u) || IsDomain(u) || IsFqdn(u) {
 		return false
 	}
 
-	if _, err := ParseUrl(u); err == nil {
+	if _, err := ParseURL(u); err == nil {
 		return true
 	}
 	return false
 }
 
-func ParseUrl(u string) (*Uri, error) {
+// ParseURL returns URL and empty error,
+// nil and error otherwise
+func ParseURL(u string) (*URI, error) {
 	var f []string
 	// URL = scheme:[//authority]path[?query][#fragment]
-	uri := &Uri{}
+	uri := &URI{}
 	//authority = [userinfo@]host[:port]
 	uri.Authority = &Authority{}
 
@@ -116,8 +123,9 @@ func ParseUrl(u string) (*Uri, error) {
 	return uri, nil
 }
 
+// HostFromURL extraxts hostname from given URL
 func HostFromURL(url string) (string, error) {
-	u, err := ParseUrl(url)
+	u, err := ParseURL(url)
 	if err != nil {
 		return "", err
 	}

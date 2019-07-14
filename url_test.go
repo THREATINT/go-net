@@ -1,8 +1,10 @@
+// Package net contains helper function for handling
+// e.g. ip addresses or domain names
 package net
 
 import "testing"
 
-func TestIsUrl(t *testing.T) {
+func TestIsURL(t *testing.T) {
 	var urlTests = []struct {
 		url      string
 		expected bool
@@ -24,7 +26,7 @@ func TestIsUrl(t *testing.T) {
 	}
 
 	for _, e := range urlTests {
-		if IsUrl(e.url) != e.expected {
+		if IsURL(e.url) != e.expected {
 			t.Errorf("%s", e.url)
 		}
 	}

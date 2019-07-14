@@ -1,3 +1,5 @@
+// Package net contains helper function for handling
+// e.g. ip addresses or domain names
 package net
 
 import (
@@ -27,8 +29,8 @@ func IsFqdn(fqdn string) bool {
 	return false
 }
 
-// DomainFromFqdn(fqdn string) (string, error) returns domain name and empty error,
-//
+// DomainFromFqdn returns domain name and empty error,
+// undefined string and error otherwiese
 func DomainFromFqdn(fqdn string) (string, error) {
 	if IsFqdn(fqdn) {
 		for _, s := range publicSuffix {
