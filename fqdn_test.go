@@ -10,6 +10,7 @@ func TestIsFqdn(t *testing.T) {
 		expected bool
 	}{
 		{"www.heise.de", true},
+		{"*.heise.de", true},
 		{"heise.de", false},
 		{"www.heise.de/newsticker", false},
 		{"1.2.3.4", false},

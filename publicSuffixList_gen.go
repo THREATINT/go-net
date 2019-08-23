@@ -6,7 +6,8 @@ package net
 // WARNING:    this is generated code, do not edit!
 //             Please run GenPublicSuffixList.py to update this file
 
-var publicSuffix = []string{
+
+var publicSuffix = []string {
 	"ac",
 	"com.ac",
 	"edu.ac",
@@ -196,6 +197,8 @@ var publicSuffix = []string{
 	"vic.au",
 	"wa.au",
 	"act.edu.au",
+	"catholic.edu.au",
+	"eq.edu.au",
 	"nsw.edu.au",
 	"nt.edu.au",
 	"qld.edu.au",
@@ -208,6 +211,8 @@ var publicSuffix = []string{
 	"tas.gov.au",
 	"vic.gov.au",
 	"wa.gov.au",
+	"education.tas.edu.au",
+	"schools.nsw.edu.au",
 	"aw",
 	"com.aw",
 	"ax",
@@ -3883,8 +3888,6 @@ var publicSuffix = []string{
 	"norfolk.museum",
 	"north.museum",
 	"nrw.museum",
-	"nuernberg.museum",
-	"nuremberg.museum",
 	"nyc.museum",
 	"nyny.museum",
 	"oceanographic.museum",
@@ -6107,6 +6110,7 @@ var publicSuffix = []string{
 	"mil.za",
 	"net.za",
 	"ngo.za",
+	"nic.za",
 	"nis.za",
 	"nom.za",
 	"org.za",
@@ -6252,7 +6256,6 @@ var publicSuffix = []string{
 	"blue",
 	"bms",
 	"bmw",
-	"bnl",
 	"bnpparibas",
 	"boats",
 	"boehringer",
@@ -6604,7 +6607,6 @@ var publicSuffix = []string{
 	"homes",
 	"homesense",
 	"honda",
-	"honeywell",
 	"horse",
 	"hospital",
 	"host",
@@ -6644,7 +6646,6 @@ var publicSuffix = []string{
 	"investments",
 	"ipiranga",
 	"irish",
-	"iselect",
 	"ismaili",
 	"ist",
 	"istanbul",
@@ -7065,7 +7066,6 @@ var publicSuffix = []string{
 	"stada",
 	"staples",
 	"star",
-	"starhub",
 	"statebank",
 	"statefarm",
 	"stc",
