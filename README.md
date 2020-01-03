@@ -5,7 +5,6 @@
 
 
 
-
 ## License
 
-Release under the MIT License. (see LICENSE)# go/net
+Release under the MIT License. (see LICENSE)
