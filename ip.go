@@ -11,7 +11,8 @@ import (
 	"strings"
 )
 
-// IsIPAddr return true if string ip contains a valid
+// IsIPAddr (ipaddr)
+// return true if string ip contains a valid
 // representation of an IPv4 or IPv6 address
 func IsIPAddr(ip string) bool {
 	ipaddr := net.ParseIP(ip)
@@ -24,20 +25,23 @@ func IsIPAddr(ip string) bool {
 	return false
 }
 
-// IsIPv4 return true if string ip contains a valid
+// IsIPv4 (ipaddr)
+// return true if string ip contains a valid
 // representation of an IPv4 address
 func IsIPv4(ip net.IP) bool {
 	return strings.Count(ip.String(), ":") < 2
 }
 
-// IsIPv6 return true if string ip contains a valid
+
+// IsIPv6 (ipaddr)
+// return true if string ip contains a valid
 // representation of an IPv6 address
 func IsIPv6(ip net.IP) bool {
 	return strings.Count(ip.String(), ":") >= 2
 }
 
-// ReverseIPAddr reverses string ip
-// (use e.g. for DNS blacklists)
+// ReverseIPAddr (ipaddr)
+// reverses string ip (use e.g. for DNS blacklists)
 func ReverseIPAddr(ip string) (string, error) {
 	result := ""
 
@@ -58,7 +62,8 @@ func ReverseIPAddr(ip string) (string, error) {
 	return result, nil
 }
 
-// IsNetwork return true if string network contains a valid
+// IsNetwork (network)
+// return true if string network contains a valid
 // representation of an ip network
 func IsNetwork(network string) bool {
 	_, ipn, err := net.ParseCIDR(network)
@@ -74,7 +79,8 @@ func IsNetwork(network string) bool {
 	return false
 }
 
-// IsIPRange return true if string r contains a valid representation
+// IsIPRange (range)
+// return true if string r contains a valid representation
 // of an ip network (e.g. 192.168.10.1-192.168.10.199)
 func IsIPRange(r string) bool {
 	f := strings.Split(r, "-")
@@ -90,7 +96,8 @@ func IsIPRange(r string) bool {
 	return false
 }
 
-// IntToIP return net.IP from the integer representation
+// IntToIP (int)
+// return net.IP from the integer representation
 // of an ip address (use e.g. for IP2Location databases )
 func IntToIP(i string) net.IP {
 	var ip net.IP

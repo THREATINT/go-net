@@ -8,7 +8,8 @@ import (
 	"strings"
 )
 
-// IsFqdn (fqdn string) returns true if fqdn is a FQDN (Fully Qualified Domain Name) consiting to
+// IsFqdn (fqdn)
+// returns true if fqdn is a FQDN (Fully Qualified Domain Name) consiting to
 // hostname + domainname + tld, otherwise false
 func IsFqdn(fqdn string) bool {
 	if !IsIPAddr(fqdn) {
@@ -29,7 +30,8 @@ func IsFqdn(fqdn string) bool {
 	return false
 }
 
-// DomainFromFqdn returns domain name and empty error,
+// DomainFromFqdn (fqdn)
+// returns domain name and empty error,
 // undefined string and error otherwiese
 func DomainFromFqdn(fqdn string) (string, error) {
 	if IsFqdn(fqdn) {
