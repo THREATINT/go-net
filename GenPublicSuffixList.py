@@ -1,8 +1,6 @@
 #!/usr/bin/python3
-from collections import OrderedDict
 
 import httplib2
-import re
 
 resp, content = httplib2.Http().request("https://publicsuffix.org/list/public_suffix_list.dat")
 
