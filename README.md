@@ -1,8 +1,9 @@
 # github.com/THREATINT/go-net
 
 ## Package net
-This library contains some basic validation and conversion for ip addresses (IPv4 + IPv6), ip ranges (from - to ip adress, IPv4 + IPv6), domain names, fqdn (fully qualified domain names), and urls.
-Please see the tests (xx_test.go) for examples.
+This library contains some basic validation and helpers for handling ip addresses (IPv4 + IPv6), ip ranges (from - to ip adress, IPv4 + IPv6), domain names, fqdn (fully qualified domain names), and urls.
+
+Please see the unit tests (xx_test.go) for examples.
 
 ## License
 Release under the MIT License. (see LICENSE)
