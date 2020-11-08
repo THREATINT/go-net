@@ -1,4 +1,4 @@
-# github.com/THREATINT/go-net
+# go-net
 
 ## Package net
 This library contains some basic validation and helpers for handling ip addresses (IPv4 + IPv6), ip ranges (from - to ip adress, IPv4 + IPv6), domain names, fqdn (fully qualified domain names), and urls.
