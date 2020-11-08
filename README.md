@@ -1,6 +1,6 @@
 # go-net
 
-## Package net
+## Introduction
 This library contains some basic validation and helpers for handling ip addresses (IPv4 + IPv6), ip ranges (from - to ip adress, IPv4 + IPv6), domain names, fqdn (fully qualified domain names), and urls.
 
 Please see the unit tests (xx_test.go) for examples.
