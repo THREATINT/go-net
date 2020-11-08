@@ -10,6 +10,7 @@ func TestIsDomain(t *testing.T) {
 		expected bool
 	}{
 		{"microsoft.com", true},
+		{"microsoft.co.uk", true},
 		{"www.microsoft.com", false},
 		{"microsoft.com.abc", false},
 		{"1.2.3.4", false},

@@ -1,3 +1,3 @@
 module github.com/THREATINT/go-net
 
-go 1.13
+go 1.15

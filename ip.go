@@ -32,7 +32,6 @@ func IsIPv4(ip net.IP) bool {
 	return strings.Count(ip.String(), ":") < 2
 }
 
-
 // IsIPv6 (ipaddr)
 // return true if string ip contains a valid
 // representation of an IPv6 address
@@ -83,7 +82,7 @@ func IsNetwork(network string) bool {
 // return true if string r contains a valid representation
 // of an ip network (e.g. 192.168.10.1-192.168.10.199)
 func IsIPRange(r string) bool {
-	f := strings.Split(r, "-")
+	f := strings.Split(strings.TrimSpace(r), "-")
 	if len(f) == 2 {
 		f[0] = strings.TrimSpace(f[0])
 		f[1] = strings.TrimSpace(f[1])
