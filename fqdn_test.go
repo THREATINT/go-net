@@ -9,10 +9,11 @@ func TestIsFqdn(t *testing.T) {
 		hostname string
 		expected bool
 	}{
-		{"www.heise.de", true},
-		{"*.heise.de", true},
-		{"heise.de", false},
-		{"www.heise.de/newsticker", false},
+		{"www.company.com", true},
+		{"*.company.com", true},
+		{"company.com", false},
+		{"www.de.company.com", true},
+		{"www.de.company.com/newsticker", false},
 		{"1.2.3.4", false},
 	}
 
