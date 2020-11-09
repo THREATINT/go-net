@@ -14,7 +14,7 @@ import (
 func IsFqdn(fqdn string) bool {
 	fqdn = strings.TrimSpace(fqdn)
 
-	if IsIPAddr(fqdn) || IsDomain(fqdn) || strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") {
+	if IsIPAddr(fqdn) || IsDomain(fqdn) || strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") || strings.Contains(fqdn, ":") || strings.Contains(fqdn, "\\") {
 		return false
 	}
 
