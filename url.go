@@ -4,8 +4,6 @@ package net
 
 import (
 	"strings"
-
-	"github.com/goware/urlx"
 )
 
 // IsURL returns true if string represents a valid URL
@@ -15,9 +13,9 @@ func IsURL(u string) bool {
 		return false
 	}
 
-	url, err := urlx.Parse(u)
+	url, err := Parse(u)
 	if err == nil {
-		_, _, err := urlx.SplitHostPort(url)
+		_, _, err := SplitHostPort(url)
 		if err == nil {
 			return true
 		}
@@ -28,12 +26,12 @@ func IsURL(u string) bool {
 
 // HostFromURL extraxts hostname from given URL
 func HostFromURL(u string) (string, error) {
-	url, err := urlx.Parse(u)
+	url, err := Parse(u)
 	if err != nil {
 		return "", err
 	}
 
-	host, _, err := urlx.SplitHostPort(url)
+	host, _, err := SplitHostPort(url)
 	if err != nil {
 		return "", err
 	}
