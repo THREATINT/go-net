@@ -128,20 +128,11 @@ func SplitHostPort(u *url.URL) (host, port string, err error) {
 }
 
 const normalizeFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
-	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost |
-	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDotSegments | purell.FlagRemoveDuplicateSlashes |
-	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes |
-	purell.FlagSortQuery
+	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost | purell.FlagDecodeOctalHost |
+	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
+	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
 
 // Normalize returns normalized URL string.
-// Behavior:
-// 1. Remove unnecessary host dots.
-// 2. Remove default port (http://localhost:80 becomes http://localhost).
-// 3. Remove duplicate slashes.
-// 4. Remove unnecessary dots from path.
-// 5. Sort query parameters.
-// 6. Decode host IP into decimal numbers.
-// 7. Handle escape values.
 func Normalize(u *url.URL) (string, error) {
 	host, port, err := SplitHostPort(u)
 	if err != nil {
