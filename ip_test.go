@@ -14,6 +14,8 @@ func TestIsIPv4(t *testing.T) {
 		{"1.2.3.4", true},
 		{"256.0.0.1", false},
 		{"1.2.3.4.5", false},
+		{"0.175", false},
+		{".12", false},
 	}
 
 	for _, e := range testIPs {
