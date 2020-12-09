@@ -11,9 +11,7 @@ import (
 	"strings"
 )
 
-// IsIPAddr
-// return true if string ip contains a valid
-// representation of an IPv4 or IPv6 address
+// IsIPAddr return true if string ip contains a valid representation of an IPv4 or IPv6 address
 func IsIPAddr(ip string) bool {
 	if strings.HasSuffix(ip, "/32") { // single host (IPv4)
 		ip = strings.TrimSuffix(ip, "/32")
@@ -24,13 +22,11 @@ func IsIPAddr(ip string) bool {
 	}
 
 	ipaddr := net.ParseIP(ip)
-	if ipaddr != nil {
-		if IsIPv4(ipaddr) || IsIPv6(ipaddr) {
-			return true
-		}
+	if ipaddr == nil {
+		return false
 	}
 
-	return false
+	return true
 }
 
 // NormaliseIPAddr return ip adresse without /32 (IPv4 or /128 (IPv6)
@@ -43,8 +39,7 @@ func NormaliseIPAddr(ip string) (string, error) {
 		}
 	}
 
-	ipaddr := net.ParseIP(ip)
-	if ipaddr == nil {
+	if !IsIPAddr(ip) {
 		return "", errors.New("invalid ip address")
 	}
 
