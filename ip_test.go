@@ -12,6 +12,7 @@ func TestIsIPv4(t *testing.T) {
 		expected bool
 	}{
 		{"1.2.3.4", true},
+		{"1.2.3.4/32", true},
 		{"256.0.0.1", false},
 		{"1.2.3.4.5", false},
 		{"0.175", false},
@@ -35,6 +36,8 @@ func TestIsIPv6(t *testing.T) {
 		{"1.2.3.4", true},
 		{"256.0.0.1", false},
 		{"1.2.3.4.5", false},
+		{"2001:eab::1", true},
+		{"2001:eab::1/128", true},
 	}
 
 	for _, e := range testIPs {

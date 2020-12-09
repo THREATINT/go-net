@@ -14,6 +14,7 @@ func TestIsDomain(t *testing.T) {
 		{"www.microsoft.com", false},
 		{"microsoft.com.abc", false},
 		{"1.2.3.4", false},
+		{"президент.рф", true}, //kremlin.ru
 	}
 
 	for _, e := range testDomains {

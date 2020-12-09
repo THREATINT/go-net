@@ -11,7 +11,6 @@ import (
 
 	"github.com/PuerkitoBio/purell"
 	"golang.org/x/net/idna"
-
 )
 
 // IsURL returns true if string represents a valid URL
@@ -161,13 +160,13 @@ func SplitHostPort(u *url.URL) (host, port string, err error) {
 	return host, port, nil
 }
 
-const normalizeFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
+const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
 	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost | purell.FlagDecodeOctalHost |
 	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
 	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
 
-// Normalize returns normalized URL string.
-func Normalize(u *url.URL) (string, error) {
+// NormaliseToUnicode returns normalised URL string.
+func NormaliseToUnicode(u *url.URL) (string, error) {
 	host, port, err := SplitHostPort(u)
 	if err != nil {
 		return "", err
@@ -188,16 +187,30 @@ func Normalize(u *url.URL) (string, error) {
 	}
 	u.Scheme = strings.ToLower(u.Scheme)
 
-	return purell.NormalizeURL(u, normalizeFlags), nil
+	return purell.NormalizeURL(u, normaliseFlags), nil
 }
 
-// NormalizeString returns normalized URL string.
-// It's a shortcut for Parse() and Normalize() funcs.
-func NormalizeString(rawURL string) (string, error) {
-	u, err := Parse(rawURL)
+// NormaliseToPunycode returns normalised URL string.
+func NormaliseToPunycode(u *url.URL) (string, error) {
+	host, port, err := SplitHostPort(u)
+	if err != nil {
+		return "", err
+	}
+	if err := checkHost(host); err != nil {
+		return "", err
+	}
+
+	// Convert to Punycode.
+	host, err = idna.ToASCII(host)
 	if err != nil {
 		return "", err
 	}
 
-	return Normalize(u)
+	u.Host = strings.ToLower(host)
+	if port != "" {
+		u.Host += ":" + port
+	}
+	u.Scheme = strings.ToLower(u.Scheme)
+
+	return purell.NormalizeURL(u, normaliseFlags), nil
 }

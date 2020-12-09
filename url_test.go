@@ -25,6 +25,8 @@ func TestIsURL(t *testing.T) {
 		{"1.2.3.4/24", true},
 		{"1.2.3.0/24", false},
 		{"2001:db8::/32", false},
+		{"🐶🚀.ws/wp-content/5t6c5-6mz2wz6-qibv", true},
+		{"xn--bp8hu0b.ws/wp-content/5t6c5-6mz2wz6-qibv", true},
 	}
 
 	for _, e := range urlTests {
@@ -60,5 +62,4 @@ func TestHostFromURL(t *testing.T) {
 			t.Errorf("expected: '%s' != '%s'", e.expected, r)
 		}
 	}
-
 }
