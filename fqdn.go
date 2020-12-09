@@ -6,12 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+
+	"golang.org/x/net/idna"
 )
 
-// IsFqdn (fqdn)
-// returns true if fqdn is a FQDN (Fully Qualified Domain Name)
-// hostname + domainname + tld, otherwise false
-func IsFqdn(fqdn string) bool {
+// IsFQDN (fqdn) returns true if fqdn is a FQDN (Fully Qualified Domain Name) hostname + domainname + tld, otherwise false
+func IsFQDN(fqdn string) bool {
 	fqdn = strings.TrimSpace(fqdn)
 
 	if IsIPAddr(fqdn) || IsDomain(fqdn) || strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") || strings.Contains(fqdn, ":") || strings.Contains(fqdn, "\\") {
@@ -29,11 +29,10 @@ func IsFqdn(fqdn string) bool {
 	return false
 }
 
-// DomainFromFqdn (fqdn)
-// returns domain name and empty error,
-// undefined string and error otherwiese
+// DomainFromFqdn returns domain name and empty error, undefined string and error otherwiese
 func DomainFromFqdn(fqdn string) (string, error) {
 	fqdn = strings.TrimSpace(fqdn)
+
 	if !IsIPAddr(fqdn) && !IsDomain(fqdn) {
 		for _, s := range publicSuffix {
 			s = fmt.Sprintf(".%s", s)
@@ -45,4 +44,36 @@ func DomainFromFqdn(fqdn string) (string, error) {
 	}
 
 	return "", errors.New("not a FQDN")
+}
+
+// NormaliseFQDNToUnicode returns normalised domain name as Unicode
+func NormaliseFQDNToUnicode(fqdn string) (string, error) {
+	fqdn = strings.TrimSpace(fqdn)
+
+	if !IsFQDN(fqdn) {
+		return "", errors.New("invalid FQDN")
+	}
+
+	fqdn, err := idna.ToUnicode(fqdn)
+	if err != nil {
+		return "", err
+	}
+
+	return fqdn, nil
+}
+
+// NormaliseFQDNToPunycode returns normalised domain name as Punycode
+func NormaliseFQDNToPunycode(fqdn string) (string, error) {
+	fqdn = strings.TrimSpace(fqdn)
+
+	if !IsFQDN(fqdn) {
+		return "", errors.New("invalid FQDN")
+	}
+
+	fqdn, err := idna.ToASCII(fqdn)
+	if err != nil {
+		return "", err
+	}
+
+	return fqdn, nil
 }

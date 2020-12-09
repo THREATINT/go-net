@@ -16,7 +16,7 @@ import (
 // IsURL returns true if string represents a valid URL
 func IsURL(u string) bool {
 	u = strings.TrimSpace(u)
-	if IsIPAddr(u) || IsNetwork(u) || IsDomain(u) || IsFqdn(u) {
+	if IsIPAddr(u) || IsNetwork(u) || IsDomain(u) || IsFQDN(u) {
 		return false
 	}
 
@@ -165,8 +165,8 @@ const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
 	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
 	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
 
-// NormaliseToUnicode returns normalised URL string.
-func NormaliseToUnicode(u *url.URL) (string, error) {
+// NormaliseURLToUnicode returns normalised URL string.
+func NormaliseURLToUnicode(u *url.URL) (string, error) {
 	host, port, err := SplitHostPort(u)
 	if err != nil {
 		return "", err
@@ -190,8 +190,8 @@ func NormaliseToUnicode(u *url.URL) (string, error) {
 	return purell.NormalizeURL(u, normaliseFlags), nil
 }
 
-// NormaliseToPunycode returns normalised URL string.
-func NormaliseToPunycode(u *url.URL) (string, error) {
+// NormaliseURLToPunycode returns normalised URL string.
+func NormaliseURLToPunycode(u *url.URL) (string, error) {
 	host, port, err := SplitHostPort(u)
 	if err != nil {
 		return "", err

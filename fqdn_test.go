@@ -18,7 +18,7 @@ func TestIsFqdn(t *testing.T) {
 	}
 
 	for _, e := range hostTests {
-		if IsFqdn(e.hostname) != e.expected {
+		if IsFQDN(e.hostname) != e.expected {
 			t.Errorf("%s", e.hostname)
 		}
 	}

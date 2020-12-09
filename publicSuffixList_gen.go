@@ -6681,7 +6681,6 @@ var publicSuffix = []string {
 	"jaguar",
 	"java",
 	"jcb",
-	"jcp",
 	"jeep",
 	"jetzt",
 	"jewelry",
@@ -7050,7 +7049,6 @@ var publicSuffix = []string {
 	"shouji",
 	"show",
 	"showtime",
-	"shriram",
 	"silk",
 	"sina",
 	"singles",
@@ -7345,4 +7343,5 @@ var publicSuffix = []string {
 	"zip",
 	"zone",
 	"zuerich",
+	"bit",
 }
