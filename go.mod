@@ -6,6 +6,6 @@ require (
 	github.com/PuerkitoBio/purell v1.1.1
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
-	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
-	golang.org/x/text v0.3.4 // indirect
+	golang.org/x/net v0.0.0-20210119194325-5f4716e94777
+	golang.org/x/text v0.3.5 // indirect
 )
