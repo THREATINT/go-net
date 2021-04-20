@@ -55,9 +55,9 @@ func TestIsNetwork(t *testing.T) {
 	}{
 		{"1.2.3.0/24", true},
 		{"2001:db8::/32", true},
+		{"2001:db8::1/32", false},
 		{"1.2.3.4", false},
 		{"1.2.3.4/24", false},
-		{"2001:db8::1/32", false},
 	}
 
 	for _, e := range networkTests {
