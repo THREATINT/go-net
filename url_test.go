@@ -25,8 +25,14 @@ func TestIsURL(t *testing.T) {
 		{"1.2.3.4/24", true},
 		{"1.2.3.0/24", false},
 		{"2001:db8::/32", false},
-		{"🐶🚀.ws/wp-content/5t6c5-6mz2wz6-qibv", true},
-		{"xn--bp8hu0b.ws/wp-content/5t6c5-6mz2wz6-qibv", true},
+		{"президент.рф", false},                      //kremlin.ru (unicode)
+		{"xn--d1abbgf6aiiy.xn--p1ai", false},         //kremlin.ru (punycode)
+		{"www.президент.рф", false},                  //www.kremlin.ru (unicode)
+		{"www.xn--d1abbgf6aiiy.xn--p1ai", false},     //www.kremlin.ru (punycode)
+		{"президент.рф/test", true},                  //kremlin.ru (unicode)
+		{"xn--d1abbgf6aiiy.xn--p1ai/test", true},     //kremlin.ru (punycode)
+		{"www.президент.рф/test", true},              //www.kremlin.ru (unicode)
+		{"www.xn--d1abbgf6aiiy.xn--p1ai/test", true}, //www.kremlin.ru (punycode)
 	}
 
 	for _, e := range urlTests {
