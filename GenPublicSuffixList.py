@@ -26,6 +26,12 @@ with open('publicSuffixList_gen.go', 'w', encoding='utf-8') as f:
             f.write(l)
             f.write('",\n')
 
+            p = l.encode("idna")
+            if l != p:
+                f.write('\t"')
+                f.write(p.decode('utf-8'))
+                f.write('",\n')
+
     f.write('\t"bit",\n') # .bit (Bitcoin)
 
     f.write('}\n')
