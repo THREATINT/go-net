@@ -25,3 +25,24 @@ func TestIsFqdn(t *testing.T) {
 		}
 	}
 }
+
+func TestDomainFromFqdn(t *testing.T) {
+	var domainFromFqdnTests = []struct {
+		fqdn   string
+		domain string
+	}{
+		{"www.company.com", "company.com"},
+		{"a.b.core.windows.net", "windows.net"},
+		{"www.windows.co.uk", "windows.co.uk"},
+		{"a.b.windows.co.uk", "windows.co.uk"},
+		{"a.b.com.windows.co.uk", "windows.co.uk"},
+	}
+
+	for _, e := range domainFromFqdnTests {
+		if domain := DomainFromFqdn(e.fqdn); domain != "" {
+			if domain != e.domain {
+				t.Errorf("%s: %s ./. %s", e.fqdn, e.domain, domain)
+			}
+		}
+	}
+}

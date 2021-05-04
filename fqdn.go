@@ -18,8 +18,7 @@ func IsFQDN(fqdn string) bool {
 		return false
 	}
 
-	domain, err := DomainFromFqdn(fqdn)
-	if err == nil && domain != "" {
+	if domain := DomainFromFqdn(fqdn); domain != "" {
 		i := strings.LastIndex(fqdn, domain)
 		if fqdn[:i] != "" {
 			return true
@@ -29,21 +28,25 @@ func IsFQDN(fqdn string) bool {
 	return false
 }
 
-// DomainFromFqdn returns domain name and empty error, undefined string and error otherwiese
-func DomainFromFqdn(fqdn string) (string, error) {
+// DomainFromFqdn returns domain name or empty string
+func DomainFromFqdn(fqdn string) string {
+	domain := ""
 	fqdn = strings.TrimSpace(fqdn)
 
 	if !IsIPAddr(fqdn) && !IsDomain(fqdn) {
 		for _, s := range publicSuffix {
 			s = fmt.Sprintf(".%s", s)
-			i := strings.LastIndex(fqdn, s)
-			if i != -1 {
-				return fqdn[i:], nil
+			if strings.HasSuffix(fqdn, s) {
+				if i := strings.LastIndex(fqdn, s); i != -1 {
+					if j := strings.LastIndex(fqdn[:i], "."); j != -1 {
+						domain = fqdn[j+1:]
+					}
+				}
 			}
 		}
 	}
 
-	return "", errors.New("not a FQDN")
+	return domain
 }
 
 // NormaliseFQDNToUnicode returns normalised domain name as Unicode
