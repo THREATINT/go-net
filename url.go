@@ -43,6 +43,8 @@ func HostFromURL(u string) (string, error) {
 		return "", err
 	}
 
+	host = strings.ToLower(host)
+
 	return host, nil
 }
 
@@ -156,6 +158,8 @@ func SplitHostPort(u *url.URL) (host, port string, err error) {
 	if _, err := strconv.Atoi(port); err != nil {
 		return "", "", &url.Error{Op: "port", URL: u.String(), Err: err}
 	}
+
+	host = strings.ToLower(host)
 
 	return host, port, nil
 }
