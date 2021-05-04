@@ -25,6 +25,8 @@ func TestIsURL(t *testing.T) {
 		{"1.2.3.4/24", true},
 		{"1.2.3.0/24", false},
 		{"2001:db8::/32", false},
+		{"WWW.EXAMPLE.COM", false},
+		{"WWW.EXAMPLE.COM/test", true},
 		{"президент.рф", false},                      //kremlin.ru (unicode)
 		{"xn--d1abbgf6aiiy.xn--p1ai", false},         //kremlin.ru (punycode)
 		{"www.президент.рф", false},                  //www.kremlin.ru (unicode)

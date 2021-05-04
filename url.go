@@ -16,6 +16,7 @@ import (
 // IsURL returns true if string represents a valid URL
 func IsURL(u string) bool {
 	u = strings.TrimSpace(u)
+	u = strings.ToLower(u)
 	if IsIPAddr(u) || IsNetwork(u) || IsDomain(u) || IsFQDN(u) {
 		return false
 	}
