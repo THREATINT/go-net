@@ -24,20 +24,3 @@ func TestIsDomain(t *testing.T) {
 		}
 	}
 }
-
-func TestDomainFromFqdn(t *testing.T) {
-	var urlTests = []struct {
-		url      string
-		expected string
-	}{
-		{"www.microsoft.com", "microsoft.com"},
-		{"www.microsoft.co.uk", "microsoft.co.uk"},
-	}
-
-	for _, e := range urlTests {
-		r, err := DomainFromFqdn(e.url)
-		if r != e.expected && err != nil {
-			t.Errorf("%s != %s", e.url, e.expected)
-		}
-	}
-}
