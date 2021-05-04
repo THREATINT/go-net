@@ -13,6 +13,7 @@ import (
 // IsFQDN (fqdn) returns true if fqdn is a FQDN (Fully Qualified Domain Name) hostname + domainname + tld, otherwise false
 func IsFQDN(fqdn string) bool {
 	fqdn = strings.TrimSpace(fqdn)
+	fqdn = strings.ToLower(fqdn)
 
 	if IsIPAddr(fqdn) || IsDomain(fqdn) || strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") || strings.Contains(fqdn, ":") || strings.Contains(fqdn, "\\") {
 		return false
@@ -30,8 +31,9 @@ func IsFQDN(fqdn string) bool {
 
 // DomainFromFqdn returns domain name or empty string
 func DomainFromFqdn(fqdn string) string {
-	domain := ""
 	fqdn = strings.TrimSpace(fqdn)
+	fqdn = strings.ToLower(fqdn)
+	domain := ""
 
 	if !IsIPAddr(fqdn) && !IsDomain(fqdn) {
 		for _, s := range publicSuffix {
@@ -52,6 +54,7 @@ func DomainFromFqdn(fqdn string) string {
 // NormaliseFQDNToUnicode returns normalised domain name as Unicode
 func NormaliseFQDNToUnicode(fqdn string) (string, error) {
 	fqdn = strings.TrimSpace(fqdn)
+	fqdn = strings.ToLower(fqdn)
 
 	if !IsFQDN(fqdn) {
 		return "", errors.New("invalid FQDN")
@@ -68,6 +71,7 @@ func NormaliseFQDNToUnicode(fqdn string) (string, error) {
 // NormaliseFQDNToPunycode returns normalised domain name as Punycode
 func NormaliseFQDNToPunycode(fqdn string) (string, error) {
 	fqdn = strings.TrimSpace(fqdn)
+	fqdn = strings.ToLower(fqdn)
 
 	if !IsFQDN(fqdn) {
 		return "", errors.New("invalid FQDN")
