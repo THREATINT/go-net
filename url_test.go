@@ -12,6 +12,11 @@ func TestIsURL(t *testing.T) {
 		{"http://localhost", true},
 		{"http://server", true},
 		{"http://www.microsoft.com", true},
+		{"HttP://www.microsoft.com", true},
+		{"www_test.microsoft.com", false},
+		{"http://www_test.microsoft.com", true},
+		{"www-test.microsoft.com", false},
+		{"http://www-test.microsoft.com", true},
 		{"microsoft.com", false},
 		{"http://www.microsoft.com", true},
 		{"http://microsoft.com", true},
@@ -27,14 +32,18 @@ func TestIsURL(t *testing.T) {
 		{"2001:db8::/32", false},
 		{"WWW.EXAMPLE.COM", false},
 		{"WWW.EXAMPLE.COM/test", true},
-		{"президент.рф", false},                      //kremlin.ru (unicode)
-		{"xn--d1abbgf6aiiy.xn--p1ai", false},         //kremlin.ru (punycode)
-		{"www.президент.рф", false},                  //www.kremlin.ru (unicode)
-		{"www.xn--d1abbgf6aiiy.xn--p1ai", false},     //www.kremlin.ru (punycode)
-		{"президент.рф/test", true},                  //kremlin.ru (unicode)
-		{"xn--d1abbgf6aiiy.xn--p1ai/test", true},     //kremlin.ru (punycode)
-		{"www.президент.рф/test", true},              //www.kremlin.ru (unicode)
-		{"www.xn--d1abbgf6aiiy.xn--p1ai/test", true}, //www.kremlin.ru (punycode)
+		{"президент.рф", false},              //kremlin.ru (unicode)
+		{"xn--d1abbgf6aiiy.xn--p1ai", false}, //kremlin.ru (punycode)
+		{"www.президент.рф", false},
+		{"www.xn--d1abbgf6aiiy.xn--p1ai", false},
+		{"президент.рф/test", true},
+		{"xn--d1abbgf6aiiy.xn--p1ai/test", true},
+		{"www.президент.рф/test", true},
+		{"www.xn--d1abbgf6aiiy.xn--p1ai/test", true},
+		{"www.президент.рф:8443/test", true},
+		{"www.xn--d1abbgf6aiiy.xn--p1ai:8443/test", true},
+		{"https://www.xn--d1abbgf6aiiy.xn--p1ai/test", true},
+		{"HTTPS://www.xn--d1abbgf6aiiy.xn--p1ai/test", true},
 	}
 
 	for _, e := range urlTests {
@@ -44,30 +53,30 @@ func TestIsURL(t *testing.T) {
 	}
 }
 
-func TestHostFromURL(t *testing.T) {
+func TestFqdnFromURL(t *testing.T) {
 	var hostTests = []struct {
 		url      string
 		expected string
 	}{
 		{"http://localhost", "localhost"},
 		{"http://www.microsoft.com", "www.microsoft.com"},
-		{"microsoft.com", "microsoft.com"},
 		{"http://microsoft.com", "microsoft.com"},
 		{"http://microsoft.com:80", "microsoft.com"},
 		{"https://www.microsoft.com:443/test", "www.microsoft.com"},
 		{"https://microsoft.com?hello#fragment", "microsoft.com"},
-		{"[2001:db8::1]/32", "[2001:db8::1]"},
-		{"[2001:db8::1]:80/32", "[2001:db8::1]"},
-		{"[2001:db8::]/32", "[2001:db8::]"},
+		{"[2001:db8::1]/32", "2001:db8::1"},
+		{"[2001:db8::1]:80/32", "2001:db8::1"},
+		{"[2001:db8::]/32", "2001:db8::"},
 		{"1.2.3.4/24", "1.2.3.4"},
 		{"1.2.3.4:8080/24", "1.2.3.4"},
 		{"https://1.2.3.4:8080/24", "1.2.3.4"},
+		{"HTTPS://1.2.3.4:8080/24", "1.2.3.4"},
 	}
 
 	for _, e := range hostTests {
 		r, err := HostFromURL(e.url)
 		if r != e.expected || err != nil {
-			t.Errorf("expected: '%s' != '%s'", e.expected, r)
+			t.Errorf("%s, expected: '%s' != '%s'", e.url, e.expected, r)
 		}
 	}
 }
