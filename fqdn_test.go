@@ -13,6 +13,8 @@ func TestIsFqdn(t *testing.T) {
 		{"*.company.com", true},
 		{"company.com", false},
 		{"www.de.company.com", true},
+		{"www_de.company.com", true},
+		{"www-de.company.com", true},
 		{"www.de.company.com/newsticker", false},
 		{"1.2.3.4", false},
 		{"612050612050612050612050612050612050-dot-onk89909.wn.r.appspot.com", true},

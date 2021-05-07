@@ -12,8 +12,7 @@ import (
 
 // IsFQDN (fqdn) returns true if fqdn is a FQDN (Fully Qualified Domain Name) hostname + domainname + tld, otherwise false
 func IsFQDN(fqdn string) bool {
-	fqdn = strings.TrimSpace(fqdn)
-	fqdn = strings.ToLower(fqdn)
+	fqdn = strings.ToLower(strings.TrimSpace(fqdn))
 
 	if IsIPAddr(fqdn) || IsDomain(fqdn) || strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") || strings.Contains(fqdn, ":") || strings.Contains(fqdn, "\\") {
 		return false
