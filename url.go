@@ -57,7 +57,9 @@ func HostFromURL(u string) (string, error) {
 		return "", err
 	}
 
-	// workarounds for known problems with net/url, see e.g. table here: https://github.com/goware/urlx
+	// workarounds
+
+	//known problems with net/url, see e.g. table here: https://github.com/goware/urlx
 	if a.Scheme == "" && a.Host == "" {
 
 		host = a.Path
@@ -80,7 +82,10 @@ func HostFromURL(u string) (string, error) {
 	}
 
 	host = strings.TrimLeft(strings.TrimRight(host, "]"), "[")
-
+	i := strings.Index(host, "/")
+	if i != -1 {
+		host = host[:i]
+	}
 	return host, nil
 }
 

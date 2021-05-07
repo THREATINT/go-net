@@ -58,6 +58,10 @@ func TestIsURL(t *testing.T) {
 
 		{"www-2.ext.example.com:8443/hello/https://www.example.com", true},
 		{"www-2.example.com/hello/https://www.example.com", true},
+
+		{"na01.safelinks.protection.outlook.com/?url=http://enbau.net/client/past-due-invoice", true},
+		{"linkprotect.cudasvc.com/url?a=http://irissnuances.com/aug2018/us/invoice-35443454&c=e", true},
+		{"www.trickyguy.com/wp-includes/01-56889677218-6377383240704407401.php/https://my.klarna.com/uk/business", true},
 	}
 
 	for _, e := range urlTests {
@@ -85,6 +89,10 @@ func TestFqdnFromURL(t *testing.T) {
 		{"1.2.3.4:8080/24", "1.2.3.4"},
 		{"https://1.2.3.4:8080/24", "1.2.3.4"},
 		{"HTTPS://1.2.3.4:8080/24", "1.2.3.4"},
+
+		{"na01.safelinks.protection.outlook.com/?url=http://enbau.net/client/past-due-invoice", "na01.safelinks.protection.outlook.com"},
+		{"linkprotect.cudasvc.com/url?a=http://irissnuances.com/aug2018/us/invoice-35443454&c=e", "linkprotect.cudasvc.com"},
+		{"www.trickyguy.com/wp-includes/01-56889677218-6377383240704407401.php/https://my.klarna.com/uk/business", "www.trickyguy.com"},
 	}
 
 	for _, e := range hostTests {
