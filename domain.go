@@ -11,15 +11,21 @@ import (
 
 // IsDomain (domainname string) returns true is domainname is a valid domain, otherwise false
 func IsDomain(domainname string) bool {
+
 	domainname = strings.TrimSpace(domainname)
 	domainname = strings.ToLower(domainname)
 
 	if !IsIPAddr(domainname) {
+
 		if !strings.Contains(domainname, "/") && !strings.Contains(domainname, ":") && !strings.Contains(domainname, " ") {
+
 			p := strings.SplitN(domainname, ".", 2)
 			if len(p) == 2 {
+
 				for _, s := range publicSuffix {
+
 					if p[1] == s {
+
 						return true
 					}
 				}
@@ -32,16 +38,21 @@ func IsDomain(domainname string) bool {
 
 // NormaliseDomainToUnicode returns normalised domain name as Unicode
 func NormaliseDomainToUnicode(domainname string) (string, error) {
+
 	domainname = strings.TrimSpace(domainname)
 	domainname = strings.ToLower(domainname)
 
 	if !IsDomain(domainname) {
+
 		return "", errors.New("invalid domain name")
+
 	}
 
 	domainname, err := idna.ToUnicode(domainname)
 	if err != nil {
+
 		return "", err
+
 	}
 
 	return domainname, nil
@@ -50,16 +61,21 @@ func NormaliseDomainToUnicode(domainname string) (string, error) {
 
 // NormaliseDomainToPunycode returns normalised domain name as Punycode
 func NormaliseDomainToPunycode(domainname string) (string, error) {
+
 	domainname = strings.TrimSpace(domainname)
 	domainname = strings.ToLower(domainname)
 
 	if !IsDomain(domainname) {
+
 		return "", errors.New("invalid domain name")
+
 	}
 
 	domainname, err := idna.ToASCII(domainname)
 	if err != nil {
+
 		return "", err
+
 	}
 
 	return domainname, nil

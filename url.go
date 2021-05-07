@@ -103,6 +103,7 @@ func normaliseURLSchema(u string) (string, error) {
 	// catch e.g. www-2.example.com/hello/https://www.example.com :
 	// there is no schema at the beginning, but as part of the Path!
 	if !(strings.Index(u, "/") < i || strings.Index(u, "?") < i) {
+
 		regex = regexp.MustCompile(`^[a-zA-Z]+$`)
 		if regex.FindString(u[:i]) == "" {
 
