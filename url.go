@@ -5,7 +5,6 @@ package net
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"net"
 	"net/url"
 	"regexp"
@@ -28,6 +27,7 @@ func IsURL(u string) bool {
 	}
 
 	if u, err = normaliseURLSchema(u); err != nil {
+
 		return false
 	}
 
@@ -44,20 +44,15 @@ func HostFromURL(u string) (string, error) {
 
 	if u, err = normaliseURLSchema(u); err != nil {
 
-		fmt.Printf("!after normalise! %s", u)
 		return "", err
 	}
 
 	if !IsURL(u) {
 
-		fmt.Printf("!IsURL! %s", u)
-
 		return "", errors.New("not a url")
 	}
 
 	if a, err = url.Parse(u); err != nil {
-
-		fmt.Printf("!urlParse! %s", u)
 
 		return "", err
 	}
@@ -105,10 +100,14 @@ func normaliseURLSchema(u string) (string, error) {
 		return r.String(), nil
 	}
 
-	regex = regexp.MustCompile(`^[a-zA-Z]+$`)
-	if regex.FindString(u[:i]) == "" {
+	// catch e.g. www-2.example.com/hello/https://www.example.com :
+	// there is no schema at the beginning, but as part of the Path!
+	if !(strings.Index(u, "/") < i || strings.Index(u, "?") < i) {
+		regex = regexp.MustCompile(`^[a-zA-Z]+$`)
+		if regex.FindString(u[:i]) == "" {
 
-		return "", errors.New("existing schema is invalid")
+			return "", errors.New("existing schema is invalid")
+		}
 	}
 
 	return u, nil
