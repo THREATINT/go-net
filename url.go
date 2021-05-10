@@ -119,13 +119,8 @@ func normaliseURLSchema(u string) (string, error) {
 	return u, nil
 }
 
-const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
-	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost | purell.FlagDecodeOctalHost |
-	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
-	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
-
 // NormaliseURLToUnicode returns normalised URL string.
-func NormaliseURLToUnicode(u string) (string, error) {
+func URLToUnicode(u string) (string, error) {
 
 	if !IsURL(u) {
 		return "", errors.New("not a url")
@@ -144,7 +139,7 @@ func NormaliseURLToUnicode(u string) (string, error) {
 	}
 
 	// Decode Punycode.
-	host, err = idna.ToUnicode(host)
+	host, err = idna.ToUnicode(strings.ToLower(host))
 	if err != nil {
 
 		return "", err
@@ -157,11 +152,11 @@ func NormaliseURLToUnicode(u string) (string, error) {
 	}
 	a.Scheme = strings.ToLower(a.Scheme)
 
-	return purell.NormalizeURL(a, normaliseFlags), nil
+	return a.String(), nil
 }
 
-// NormaliseURLToPunycode returns normalised URL string.
-func NormaliseURLToPunycode(u string) (string, error) {
+// URLToPunycode returns URL string in punycode
+func URLToPunycode(u string) (string, error) {
 
 	if !IsURL(u) {
 
@@ -181,7 +176,7 @@ func NormaliseURLToPunycode(u string) (string, error) {
 	}
 
 	// Convert to Punycode.
-	host, err = idna.ToASCII(host)
+	host, err = idna.ToASCII(strings.ToLower(host))
 	if err != nil {
 
 		return "", err
@@ -193,6 +188,29 @@ func NormaliseURLToPunycode(u string) (string, error) {
 		a.Host += ":" + port
 	}
 	a.Scheme = strings.ToLower(a.Scheme)
+
+	return a.String(), nil
+}
+
+const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
+	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost | purell.FlagDecodeOctalHost |
+	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
+	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
+
+func NormaliseURL(u string) (string, error) {
+
+	var a *url.URL
+	var err error
+
+	if !IsURL(u) {
+
+		return "", errors.New("not a url")
+	}
+
+	if a, err = url.Parse(u); err != nil {
+
+		return "", err
+	}
 
 	return purell.NormalizeURL(a, normaliseFlags), nil
 }

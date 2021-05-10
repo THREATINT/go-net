@@ -36,8 +36,8 @@ func IsDomain(domainname string) bool {
 	return false
 }
 
-// NormaliseDomainToUnicode returns normalised domain name as Unicode
-func NormaliseDomainToUnicode(domainname string) (string, error) {
+// DomainToUnicode returns  domain name as Unicode
+func DomainToUnicode(domainname string) (string, error) {
 
 	domainname = strings.TrimSpace(domainname)
 	domainname = strings.ToLower(domainname)
@@ -48,19 +48,11 @@ func NormaliseDomainToUnicode(domainname string) (string, error) {
 
 	}
 
-	domainname, err := idna.ToUnicode(domainname)
-	if err != nil {
-
-		return "", err
-
-	}
-
-	return domainname, nil
-
+	return idna.ToUnicode(domainname)
 }
 
-// NormaliseDomainToPunycode returns normalised domain name as Punycode
-func NormaliseDomainToPunycode(domainname string) (string, error) {
+// DomainToPunycode returns normalised domain name as Punycode
+func DomainToPunycode(domainname string) (string, error) {
 
 	domainname = strings.TrimSpace(domainname)
 	domainname = strings.ToLower(domainname)
@@ -71,12 +63,5 @@ func NormaliseDomainToPunycode(domainname string) (string, error) {
 
 	}
 
-	domainname, err := idna.ToASCII(domainname)
-	if err != nil {
-
-		return "", err
-
-	}
-
-	return domainname, nil
+	return idna.ToASCII(domainname)
 }

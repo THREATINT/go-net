@@ -62,8 +62,8 @@ func DomainFromFqdn(fqdn string) string {
 	return domain
 }
 
-// NormaliseFQDNToUnicode returns normalised domain name as Unicode
-func NormaliseFQDNToUnicode(fqdn string) (string, error) {
+// FQDNToUnicode returns  domain name as Unicode
+func FQDNToUnicode(fqdn string) (string, error) {
 
 	fqdn = strings.TrimSpace(fqdn)
 	fqdn = strings.ToLower(fqdn)
@@ -74,18 +74,11 @@ func NormaliseFQDNToUnicode(fqdn string) (string, error) {
 
 	}
 
-	fqdn, err := idna.ToUnicode(fqdn)
-	if err != nil {
-
-		return "", err
-
-	}
-
-	return fqdn, nil
+	return idna.ToUnicode(fqdn)
 }
 
-// NormaliseFQDNToPunycode returns normalised domain name as Punycode
-func NormaliseFQDNToPunycode(fqdn string) (string, error) {
+// FQDNToPunycode returns domain name as Punycode
+func FQDNToPunycode(fqdn string) (string, error) {
 
 	fqdn = strings.TrimSpace(fqdn)
 	fqdn = strings.ToLower(fqdn)
@@ -96,12 +89,5 @@ func NormaliseFQDNToPunycode(fqdn string) (string, error) {
 
 	}
 
-	fqdn, err := idna.ToASCII(fqdn)
-	if err != nil {
-
-		return "", err
-
-	}
-
-	return fqdn, nil
+	return idna.ToASCII(fqdn)
 }
