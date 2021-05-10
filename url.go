@@ -26,13 +26,21 @@ func IsURL(u string) bool {
 		return false
 	}
 
-	if u, err = normaliseURLSchema(u); err != nil {
+	if u, err = normaliseURLSchema(u); err == nil {
 
-		return false
+		if _, err := url.Parse(u); err == nil {
+
+			if h, err := HostFromURL(u); err == nil {
+
+				if IsIPAddr(h) || IsDomain(h) || IsFQDN(h) {
+
+					return true
+				}
+			}
+		}
 	}
 
-	_, err = url.Parse(u)
-	return err == nil
+	return false
 }
 
 // HostFromURL extraxts hostname from given URL
@@ -45,11 +53,6 @@ func HostFromURL(u string) (string, error) {
 	if u, err = normaliseURLSchema(u); err != nil {
 
 		return "", err
-	}
-
-	if !IsURL(u) {
-
-		return "", errors.New("not a url")
 	}
 
 	if a, err = url.Parse(u); err != nil {
