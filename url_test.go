@@ -102,3 +102,56 @@ func TestFqdnFromURL(t *testing.T) {
 		}
 	}
 }
+
+func TestNormaliseURLSchema(t *testing.T) {
+	var hostTests = []struct {
+		url      string
+		expected string
+	}{
+		{"www.example.com/test", "http://www.example.com/test"},
+		{"http://www.example.com/test", "http://www.example.com/test"},
+		{"президент.рф/test", "http://президент.рф/test"},
+		{"http://президент.рф/test", "http://президент.рф/test"},
+		{"xn--d1abbgf6aiiy.xn--p1ai/test", "http://xn--d1abbgf6aiiy.xn--p1ai/test"},
+		{"http://xn--d1abbgf6aiiy.xn--p1ai/test", "http://xn--d1abbgf6aiiy.xn--p1ai/test"},
+	}
+
+	for _, e := range hostTests {
+		r, err := NormaliseURLSchema(e.url)
+		if r != e.expected || err != nil {
+			t.Errorf("%s, expected: '%s' != '%s'", e.url, e.expected, r)
+		}
+	}
+}
+
+func TestToUnicode(t *testing.T) {
+	var hostTests = []struct {
+		url      string
+		expected string
+	}{
+		{"http://xn--d1abbgf6aiiy.xn--p1ai/test", "http://президент.рф/test"},
+	}
+
+	for _, e := range hostTests {
+		r, err := URLToUnicode(e.url)
+		if r != e.expected || err != nil {
+			t.Errorf("%s, expected: '%s' != '%s'", e.url, e.expected, r)
+		}
+	}
+}
+
+func TestToPunycode(t *testing.T) {
+	var hostTests = []struct {
+		url      string
+		expected string
+	}{
+		{"http://президент.рф/test", "http://xn--d1abbgf6aiiy.xn--p1ai/test"},
+	}
+
+	for _, e := range hostTests {
+		r, err := URLToPunycode(e.url)
+		if r != e.expected || err != nil {
+			t.Errorf("%s, expected: '%s' != '%s'", e.url, e.expected, r)
+		}
+	}
+}

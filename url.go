@@ -26,7 +26,7 @@ func IsURL(u string) bool {
 		return false
 	}
 
-	if u, err = normaliseURLSchema(u); err == nil {
+	if u, err = NormaliseURLSchema(u); err == nil {
 
 		if _, err := url.Parse(u); err == nil {
 
@@ -50,7 +50,7 @@ func HostFromURL(u string) (string, error) {
 	var host string
 	var a *url.URL
 
-	if u, err = normaliseURLSchema(u); err != nil {
+	if u, err = NormaliseURLSchema(u); err != nil {
 
 		return "", err
 	}
@@ -92,7 +92,7 @@ func HostFromURL(u string) (string, error) {
 	return host, nil
 }
 
-func normaliseURLSchema(u string) (string, error) {
+func NormaliseURLSchema(u string) (string, error) {
 
 	var i int
 	var regex *regexp.Regexp
@@ -125,74 +125,41 @@ func normaliseURLSchema(u string) (string, error) {
 // NormaliseURLToUnicode returns normalised URL string.
 func URLToUnicode(u string) (string, error) {
 
-	if !IsURL(u) {
-		return "", errors.New("not a url")
-	}
+	var err error
+	var host string
+	var unicodehost string
 
-	a, err := url.Parse(u)
-	if err != nil {
-
-		return "", err
-	}
-
-	host, port, err := net.SplitHostPort(a.String())
-	if err != nil {
+	if host, err = HostFromURL(u); err != nil {
 
 		return "", err
+
 	}
 
-	// Decode Punycode.
-	host, err = idna.ToUnicode(strings.ToLower(host))
-	if err != nil {
-
+	if unicodehost, err = idna.ToUnicode(host); err != nil {
 		return "", err
 	}
-	a.Host = host
-
-	if port != "" {
-
-		a.Host += ":" + port
-	}
-	a.Scheme = strings.ToLower(a.Scheme)
-
-	return a.String(), nil
+	u = strings.Replace(u, host, unicodehost, 1)
+	return u, nil
 }
 
 // URLToPunycode returns URL string in punycode
 func URLToPunycode(u string) (string, error) {
 
-	if !IsURL(u) {
+	var err error
+	var host string
+	var unicodehost string
 
-		return "", errors.New("not a url")
-	}
-
-	a, err := url.Parse(u)
-	if err != nil {
+	if host, err = HostFromURL(u); err != nil {
 
 		return "", err
+
 	}
 
-	host, port, err := net.SplitHostPort(a.Host)
-	if err != nil {
-
+	if unicodehost, err = idna.ToASCII(host); err != nil {
 		return "", err
 	}
-
-	// Convert to Punycode.
-	host, err = idna.ToASCII(strings.ToLower(host))
-	if err != nil {
-
-		return "", err
-	}
-
-	a.Host = host
-	if port != "" {
-
-		a.Host += ":" + port
-	}
-	a.Scheme = strings.ToLower(a.Scheme)
-
-	return a.String(), nil
+	u = strings.Replace(u, host, unicodehost, 1)
+	return u, nil
 }
 
 const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
