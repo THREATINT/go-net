@@ -26,13 +26,21 @@ func IsURL(u string) bool {
 		return false
 	}
 
-	if u, err = normaliseURLSchema(u); err != nil {
+	if u, err = NormaliseURLSchema(u); err == nil {
 
-		return false
+		if _, err := url.Parse(u); err == nil {
+
+			if h, err := HostFromURL(u); err == nil {
+
+				if IsIPAddr(h) || IsDomain(h) || IsFQDN(h) {
+
+					return true
+				}
+			}
+		}
 	}
 
-	_, err = url.Parse(u)
-	return err == nil
+	return false
 }
 
 // HostFromURL extraxts hostname from given URL
@@ -42,14 +50,9 @@ func HostFromURL(u string) (string, error) {
 	var host string
 	var a *url.URL
 
-	if u, err = normaliseURLSchema(u); err != nil {
+	if u, err = NormaliseURLSchema(u); err != nil {
 
 		return "", err
-	}
-
-	if !IsURL(u) {
-
-		return "", errors.New("not a url")
 	}
 
 	if a, err = url.Parse(u); err != nil {
@@ -57,7 +60,9 @@ func HostFromURL(u string) (string, error) {
 		return "", err
 	}
 
-	// workarounds for known problems with net/url, see e.g. table here: https://github.com/goware/urlx
+	// workarounds
+
+	//known problems with net/url, see e.g. table here: https://github.com/goware/urlx
 	if a.Scheme == "" && a.Host == "" {
 
 		host = a.Path
@@ -80,11 +85,14 @@ func HostFromURL(u string) (string, error) {
 	}
 
 	host = strings.TrimLeft(strings.TrimRight(host, "]"), "[")
-
+	i := strings.Index(host, "/")
+	if i != -1 {
+		host = host[:i]
+	}
 	return host, nil
 }
 
-func normaliseURLSchema(u string) (string, error) {
+func NormaliseURLSchema(u string) (string, error) {
 
 	var i int
 	var regex *regexp.Regexp
@@ -114,80 +122,65 @@ func normaliseURLSchema(u string) (string, error) {
 	return u, nil
 }
 
+// NormaliseURLToUnicode returns normalised URL string.
+func URLToUnicode(u string) (string, error) {
+
+	var err error
+	var host string
+	var unicodehost string
+
+	if host, err = HostFromURL(u); err != nil {
+
+		return "", err
+
+	}
+
+	if unicodehost, err = idna.ToUnicode(host); err != nil {
+		return "", err
+	}
+	u = strings.Replace(u, host, unicodehost, 1)
+	return u, nil
+}
+
+// URLToPunycode returns URL string in punycode
+func URLToPunycode(u string) (string, error) {
+
+	var err error
+	var host string
+	var unicodehost string
+
+	if host, err = HostFromURL(u); err != nil {
+
+		return "", err
+
+	}
+
+	if unicodehost, err = idna.ToASCII(host); err != nil {
+		return "", err
+	}
+	u = strings.Replace(u, host, unicodehost, 1)
+	return u, nil
+}
+
 const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
 	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost | purell.FlagDecodeOctalHost |
 	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
 	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
 
-// NormaliseURLToUnicode returns normalised URL string.
-func NormaliseURLToUnicode(u string) (string, error) {
+func NormaliseURL(u string) (string, error) {
 
-	if !IsURL(u) {
-		return "", errors.New("not a url")
-	}
-
-	a, err := url.Parse(u)
-	if err != nil {
-
-		return "", err
-	}
-
-	host, port, err := net.SplitHostPort(a.String())
-	if err != nil {
-
-		return "", err
-	}
-
-	// Decode Punycode.
-	host, err = idna.ToUnicode(host)
-	if err != nil {
-
-		return "", err
-	}
-	a.Host = host
-
-	if port != "" {
-
-		a.Host += ":" + port
-	}
-	a.Scheme = strings.ToLower(a.Scheme)
-
-	return purell.NormalizeURL(a, normaliseFlags), nil
-}
-
-// NormaliseURLToPunycode returns normalised URL string.
-func NormaliseURLToPunycode(u string) (string, error) {
+	var a *url.URL
+	var err error
 
 	if !IsURL(u) {
 
 		return "", errors.New("not a url")
 	}
 
-	a, err := url.Parse(u)
-	if err != nil {
+	if a, err = url.Parse(u); err != nil {
 
 		return "", err
 	}
-
-	host, port, err := net.SplitHostPort(a.Host)
-	if err != nil {
-
-		return "", err
-	}
-
-	// Convert to Punycode.
-	host, err = idna.ToASCII(host)
-	if err != nil {
-
-		return "", err
-	}
-
-	a.Host = host
-	if port != "" {
-
-		a.Host += ":" + port
-	}
-	a.Scheme = strings.ToLower(a.Scheme)
 
 	return purell.NormalizeURL(a, normaliseFlags), nil
 }
