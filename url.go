@@ -149,6 +149,7 @@ const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
 	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
 	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
 
+// NormaliseURL returns a normalised url (e.g. without default ports like :80 for HTTP or :443 for HTTPS, duplicate slashes, etc.)
 func NormaliseURL(u string) (string, error) {
 	var (
 		err error
