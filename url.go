@@ -75,6 +75,7 @@ func HostFromURL(u string) (string, error) {
 	return host, nil
 }
 
+// NormaliseURLSchema returns normalised URL string that includes a schema.
 func NormaliseURLSchema(u string) (string, error) {
 	var (
 		i     int
@@ -101,7 +102,7 @@ func NormaliseURLSchema(u string) (string, error) {
 	return u, nil
 }
 
-// NormaliseURLToUnicode returns normalised URL string.
+// URLToUnicode returns normalised URL string.
 func URLToUnicode(u string) (string, error) {
 	var (
 		err         error

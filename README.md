@@ -1,7 +1,8 @@
 # go-net
 
 ## Introduction
-This library contains some basic validation and helpers for handling ip addresses (IPv4 + IPv6), ip ranges (from - to ip adress, IPv4 + IPv6), domain names, fqdn (fully qualified domain names), and urls.
+This library contains some basic validation and helpers for handling IP addresses, IP networks, IP ranges (from - to IP adress), domain names, FQDN (fully qualified domain names), and URL. 
+All methods that work with IP addresses are IPv4 and IPv6 compliant.
 
 Please see the unit tests (xx_test.go) for examples.
 
