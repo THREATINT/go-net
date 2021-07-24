@@ -6,8 +6,7 @@ package net
 // WARNING:    this is generated code, do not edit!
 //             Please run GenPublicSuffixList.py to update this file
 
-
-var publicSuffix = []string {
+var publicSuffix = []string{
 	"ac",
 	"ac",
 	"com.ac",
