@@ -19,9 +19,9 @@ We have received feedback from software developers in the past who were confused
   * _www.website.tld_ is not a URL but a FQDN (fully qualified domain name), because it is missing the path component. 
   * _www.website.tld/about_ is a valid URL.
 * IP addresses and networks
-   * 10.0.0.1/32 although presented as a network address is in fact an IPv4 address (10.0.0.1).
-   * 10.0.0.1/24 not not an IPv4 address, but a URL! 
-   * 10.0.0.0/24 is a network address.
+  * 10.0.0.1/32 although presented as a network address is in fact an IPv4 address (10.0.0.1).
+  * 10.0.0.1/24 not not an IPv4 address, but a URL! 
+  * 10.0.0.0/24 is a network address.
 
 If you find any other behaviour that seems odd, please double check with the code of the unit tests. If something still does not make sense, let us know by starting a discussion or by opening an issue here.
 
