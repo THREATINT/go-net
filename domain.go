@@ -9,7 +9,7 @@ import (
 	"golang.org/x/net/idna"
 )
 
-// IsDomain (domainname string) returns true is domainname is a valid domain, otherwise false
+// IsDomain (domainname string) returns true if domainname is a valid domain, otherwise false
 func IsDomain(domainname string) bool {
 	domainname = strings.TrimSpace(domainname)
 	domainname = strings.ToLower(domainname)
