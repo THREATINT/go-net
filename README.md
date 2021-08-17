@@ -1,7 +1,7 @@
 # go-net
 
 ## Introduction
-This library contains basic validators and helpers for handling IP addresses, IP networks, IP ranges (from - to IP adress), domain names, FQDN (fully qualified domain names), and URL (unified ressource locators). 
+This library contains basic validators and helpers for handling IP addresses, IP networks, IP ranges (from - to IP adress), domain names, FQDN (fully qualified domain names), and URL (unified resource locators). 
 
 All methods that work with IP addresses are IPv4 and IPv6 compliant.
 
