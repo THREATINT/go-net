@@ -18,7 +18,7 @@ func IsDomain(domainname string) bool {
 		if !strings.Contains(domainname, "/") && !strings.Contains(domainname, ":") && !strings.Contains(domainname, " ") {
 			p := strings.SplitN(domainname, ".", 2)
 			if len(p) == 2 {
-				for _, s := range publicSuffix {
+				for _, s := range PublicSuffix {
 					if p[1] == s {
 						return true
 					}
