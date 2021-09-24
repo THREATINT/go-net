@@ -35,7 +35,7 @@ func DomainFromFqdn(fqdn string) string {
 	domain := ""
 
 	if !IsIPAddr(fqdn) && !IsDomain(fqdn) {
-		for _, s := range publicSuffix {
+		for _, s := range PublicSuffix {
 			s = fmt.Sprintf(".%s", s)
 			if strings.HasSuffix(fqdn, s) {
 				if i := strings.LastIndex(fqdn, s); i != -1 {
