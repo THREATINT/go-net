@@ -12,7 +12,7 @@ with open('publicSuffixList_gen.go', 'w', encoding='utf-8') as f:
     f.write("// WARNING:    this is generated code, do not edit!\n")
     f.write("//             Please run GenPublicSuffixList.py to update this file\n\n\n")
 
-    f.write("var publicSuffix = []string {\n")
+    f.write("var PublicSuffix = []string {\n")
 
     for l in str(content, 'utf-8').splitlines():
         if l == '// ===END ICANN DOMAINS===':
