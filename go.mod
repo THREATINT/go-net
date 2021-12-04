@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/PuerkitoBio/purell v1.1.1
-	golang.org/x/net v0.0.0-20211020060615-d418f374d309
+	golang.org/x/net v0.0.0-20211203184738-4852103109b8
 )
 
 require (
