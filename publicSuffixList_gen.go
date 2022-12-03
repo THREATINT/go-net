@@ -12452,8 +12452,6 @@ var PublicSuffix = []string {
 	"aco",
 	"actor",
 	"actor",
-	"adac",
-	"adac",
 	"ads",
 	"ads",
 	"adult",
