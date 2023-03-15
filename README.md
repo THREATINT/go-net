@@ -27,3 +27,6 @@ If you find any other behaviour that seems odd, please double check with the cod
 
 ## License
 Release under the MIT License. (see LICENSE)
+
+[![DeepSource](https://deepsource.io/gh/THREATINT/go-net.svg/?label=active+issues&show_trend=true&token=4HqprlCLNf-rAsnx8mVx_RMc)](https://deepsource.io/gh/THREATINT/go-net/?ref=repository-badge)
+
