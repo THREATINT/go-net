@@ -87,7 +87,7 @@ func TestIsIPRange(t *testing.T) {
 }
 
 func TestReverseIP(t *testing.T) {
-	//google-public-dns-b.google.com
+	// google-public-dns-b.google.com
 	r, err := ReverseIPAddr("8.8.4.4")
 	if err != nil {
 		t.Error(err)
