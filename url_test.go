@@ -9,8 +9,8 @@ func TestIsURL(t *testing.T) {
 		url      string
 		expected bool
 	}{
-		//{"http://localhost", true},
-		//{"http://server", true},
+		// {"http://localhost", true},
+		// {"http://server", true},
 		{"http://www.microsoft.com", true},
 		{"HttP://www.microsoft.com", true},
 
@@ -43,8 +43,8 @@ func TestIsURL(t *testing.T) {
 		{"WWW.EXAMPLE.COM", false},
 		{"WWW.EXAMPLE.COM/test", true},
 
-		{"президент.рф", false},              //kremlin.ru (unicode)
-		{"xn--d1abbgf6aiiy.xn--p1ai", false}, //kremlin.ru (punycode)
+		{"президент.рф", false},              // kremlin.ru (unicode)
+		{"xn--d1abbgf6aiiy.xn--p1ai", false}, // kremlin.ru (punycode)
 		{"www.президент.рф", false},
 		{"www.xn--d1abbgf6aiiy.xn--p1ai", false},
 		{"президент.рф/test", true},
@@ -76,7 +76,7 @@ func TestFqdnFromURL(t *testing.T) {
 		url      string
 		expected string
 	}{
-		//{"http://localhost", "localhost"},
+		// {"http://localhost", "localhost"},
 		{"http://www.microsoft.com", "www.microsoft.com"},
 		{"http://microsoft.com", "microsoft.com"},
 		{"http://microsoft.com:80", "microsoft.com"},
