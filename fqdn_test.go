@@ -19,10 +19,10 @@ func TestIsFqdn(t *testing.T) {
 		{"1.2.3.4", false},
 		{"612050612050612050612050612050612050-dot-onk89909.wn.r.appspot.com", true},
 		{"9876543456886756565656-secondary.z19.web.core.windows.net", true},
-		{"президент.рф", false},                 //kremlin.ru (unicode)
-		{"xn--d1abbgf6aiiy.xn--p1ai", false},    //kremlin.ru (punycode)
-		{"www.президент.рф", true},              //www.kremlin.ru (unicode)
-		{"www.xn--d1abbgf6aiiy.xn--p1ai", true}, //www.kremlin.ru (punycode)
+		{"президент.рф", false},                 // kremlin.ru (unicode)
+		{"xn--d1abbgf6aiiy.xn--p1ai", false},    // kremlin.ru (punycode)
+		{"www.президент.рф", true},              // www.kremlin.ru (unicode)
+		{"www.xn--d1abbgf6aiiy.xn--p1ai", true}, // www.kremlin.ru (punycode)
 	}
 
 	for _, e := range hostTests {
