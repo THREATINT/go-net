@@ -29,4 +29,4 @@ If you find any other behaviour that seems odd, please double check with the cod
 Release under the MIT License. (see LICENSE)
 
 ## QA
-[![DeepSource](https://deepsource.io/gh/THREATINT/go-net.svg/?label=active+issues&show_trend=true&token=4HqprlCLNf-rAsnx8mVx_RMc)](https://deepsource.io/gh/THREATINT/go-net/?ref=repository-badge)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/01c46c2a6f10458f8e7f09fff5ae1915)](https://app.codacy.com/gh/THREATINT/go-net/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
