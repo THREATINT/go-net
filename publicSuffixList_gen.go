@@ -1,16 +1,14 @@
 package net
 
-// List of know public suffixes for domain based on
+// List of know public suffixes for domains based on
 // https://data.iana.org/TLD/tlds-alpha-by-domain.txt
 
-// WARNING:    this is generated code, do not edit!
-//             Please run GenPublicSuffixList.py to update this file
+// WARNING:    this is generated code, do not edit - please run GenPublicSuffixList.py to update this file
 
 
 var PublicSuffix = []string {
 	"aaa",
 	"aarp",
-	"abarth",
 	"abb",
 	"abbott",
 	"abbvie",
@@ -45,7 +43,6 @@ var PublicSuffix = []string {
 	"airtel",
 	"akdn",
 	"al",
-	"alfaromeo",
 	"alibaba",
 	"alipay",
 	"allfinanz",
@@ -287,7 +284,6 @@ var PublicSuffix = []string {
 	"contact",
 	"contractors",
 	"cooking",
-	"cookingchannel",
 	"cool",
 	"coop",
 	"corsica",
@@ -419,7 +415,6 @@ var PublicSuffix = []string {
 	"ferrari",
 	"ferrero",
 	"fi",
-	"fiat",
 	"fidelity",
 	"fido",
 	"film",
@@ -445,7 +440,6 @@ var PublicSuffix = []string {
 	"fo",
 	"foo",
 	"food",
-	"foodnetwork",
 	"football",
 	"ford",
 	"forex",
@@ -551,7 +545,6 @@ var PublicSuffix = []string {
 	"helsinki",
 	"here",
 	"hermes",
-	"hgtv",
 	"hiphop",
 	"hisamitsu",
 	"hitachi",
@@ -573,7 +566,6 @@ var PublicSuffix = []string {
 	"host",
 	"hosting",
 	"hot",
-	"hoteles",
 	"hotels",
 	"hotmail",
 	"house",
@@ -686,7 +678,6 @@ var PublicSuffix = []string {
 	"lamborghini",
 	"lamer",
 	"lancaster",
-	"lancia",
 	"land",
 	"landrover",
 	"lanxess",
@@ -760,7 +751,6 @@ var PublicSuffix = []string {
 	"markets",
 	"marriott",
 	"marshalls",
-	"maserati",
 	"mattel",
 	"mba",
 	"mc",
@@ -907,7 +897,6 @@ var PublicSuffix = []string {
 	"partners",
 	"parts",
 	"party",
-	"passagens",
 	"pay",
 	"pccw",
 	"pe",
@@ -1209,7 +1198,6 @@ var PublicSuffix = []string {
 	"trading",
 	"training",
 	"travel",
-	"travelchannel",
 	"travelers",
 	"travelersinsurance",
 	"trust",
@@ -1271,7 +1259,6 @@ var PublicSuffix = []string {
 	"voto",
 	"voyage",
 	"vu",
-	"vuelos",
 	"wales",
 	"walmart",
 	"walter",
