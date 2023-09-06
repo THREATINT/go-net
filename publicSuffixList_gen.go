@@ -1168,7 +1168,6 @@ var PublicSuffix = []string {
 	"tiaa",
 	"tickets",
 	"tienda",
-	"tiffany",
 	"tips",
 	"tires",
 	"tirol",
