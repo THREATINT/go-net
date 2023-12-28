@@ -1024,7 +1024,6 @@ var PublicSuffix = []string {
 	"sbi",
 	"sbs",
 	"sc",
-	"sca",
 	"scb",
 	"schaeffler",
 	"schmidt",
