@@ -305,7 +305,6 @@ var PublicSuffix = []string {
 	"cymru",
 	"cyou",
 	"cz",
-	"dabur",
 	"dad",
 	"dance",
 	"data",
