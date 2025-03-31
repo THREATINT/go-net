@@ -1,5 +1,3 @@
-// Package net contains helper function for handling
-// e.g. ip addresses or domain names
 package net
 
 import (

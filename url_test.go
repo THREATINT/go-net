@@ -1,8 +1,8 @@
-// Package net contains helper function for handling
-// e.g. ip addresses or domain names
 package net
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestIsURL(t *testing.T) {
 	var urlTests = []struct {
@@ -20,9 +20,9 @@ func TestIsURL(t *testing.T) {
 
 		{"www-test.microsoft.com", false},
 
-		{"http://www-test.microsoft.com", true},
-
 		{"microsoft.com", false},
+
+		{"http://www-test.microsoft.com", true},
 
 		{"http://www.microsoft.com", true},
 		{"http://microsoft.com", true},
@@ -36,7 +36,7 @@ func TestIsURL(t *testing.T) {
 		{"[2001:db8::]/32", true},
 
 		{"1.2.3.4/24", true},
-		{"1.2.3.0/24", false},
+		{"1.2.3.0/24", false}, // -> network!!!
 
 		{"2001:db8::/32", false},
 
@@ -64,14 +64,14 @@ func TestIsURL(t *testing.T) {
 		{"www.trickyguy.com/wp-includes/01-56889677218-6377383240704407401.php/https://my.klarna.com/uk/business", true},
 	}
 
-	for _, e := range urlTests {
+	for i, e := range urlTests {
 		if IsURL(e.url) != e.expected {
-			t.Errorf("%s", e.url)
+			t.Errorf("%d. %s", i+1, e.url)
 		}
 	}
 }
 
-func TestFqdnFromURL(t *testing.T) {
+func TestHostFromURL(t *testing.T) {
 	var hostTests = []struct {
 		url      string
 		expected string
