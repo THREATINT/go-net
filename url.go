@@ -1,31 +1,32 @@
-// Package net contains helper function for handling
-// e.g. ip addresses or domain names
+// Package net contains helper function for handling urls
 package net
 
 import (
 	"bytes"
 	"errors"
+	"fmt"
+	"github.com/PuerkitoBio/purell"
 	"net"
 	"net/url"
 	"regexp"
 	"strings"
-
-	"github.com/PuerkitoBio/purell"
-	"golang.org/x/net/idna"
 )
 
 // IsURL returns true if string represents a valid URL
 func IsURL(u string) bool {
-	var err error
+	var (
+		err error
+		nu  string
+	)
 
 	u = strings.ToLower(strings.TrimSpace(u))
 	if IsIPAddr(u) || IsNetwork(u) || IsDomain(u) || IsFQDN(u) {
 		return false
 	}
 
-	if u, err = NormaliseURLSchema(u); err == nil {
-		if _, err := url.Parse(u); err == nil {
-			if h, err := HostFromURL(u); err == nil {
+	if nu, err = NormaliseURLSchema(u); err == nil {
+		if _, err := url.Parse(nu); err == nil {
+			if h, err := HostFromURL(nu); err == nil {
 				if IsIPAddr(h) || IsDomain(h) || IsFQDN(h) {
 					return true
 				}
@@ -45,10 +46,12 @@ func HostFromURL(u string) (string, error) {
 	)
 
 	if u, err = NormaliseURLSchema(u); err != nil {
+		fmt.Println(err)
 		return "", err
 	}
 
 	if a, err = url.Parse(u); err != nil {
+		fmt.Println(err)
 		return "", err
 	}
 
@@ -114,7 +117,7 @@ func URLToUnicode(u string) (string, error) {
 		return "", err
 	}
 
-	if unicodehost, err = idna.ToUnicode(host); err != nil {
+	if unicodehost, err = ToUnicode(host); err != nil {
 		return "", err
 	}
 
@@ -135,7 +138,7 @@ func URLToPunycode(u string) (string, error) {
 		return "", err
 	}
 
-	if unicodehost, err = idna.ToASCII(host); err != nil {
+	if unicodehost, err = ToPunycode(host); err != nil {
 		return "", err
 	}
 
@@ -147,9 +150,11 @@ func URLToPunycode(u string) (string, error) {
 const normaliseFlags purell.NormalizationFlags = purell.FlagRemoveDefaultPort |
 	purell.FlagDecodeDWORDHost | purell.FlagDecodeHexHost | purell.FlagDecodeOctalHost |
 	purell.FlagRemoveUnnecessaryHostDots | purell.FlagRemoveDuplicateSlashes |
-	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes | purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
+	purell.FlagUppercaseEscapes | purell.FlagDecodeUnnecessaryEscapes |
+	purell.FlagEncodeNecessaryEscapes | purell.FlagRemoveEmptyPortSeparator | purell.FlagSortQuery
 
-// NormaliseURL returns a normalised url (e.g. without default ports like :80 for HTTP or :443 for HTTPS, duplicate slashes, etc.)
+// NormaliseURL returns a normalised url (e.g. without default ports like :80 for HTTP or :443 for HTTPS,
+// duplicate slashes, etc.)
 func NormaliseURL(u string) (string, error) {
 	var (
 		err error

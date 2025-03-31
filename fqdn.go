@@ -1,27 +1,33 @@
-// Package net contains helper function for handling
-// e.g. ip addresses or domain names
 package net
 
 import (
-	"errors"
 	"fmt"
 	"strings"
-
-	"golang.org/x/net/idna"
 )
 
-// IsFQDN (fqdn) returns true if fqdn is a FQDN (Fully Qualified Domain Name) hostname + domainname + tld, otherwise false
+// IsFQDN (fqdn) returns true if fqdn is a FQDN (Fully Qualified Domain Name) hostname + domainname + tld,
+// otherwise false
 func IsFQDN(fqdn string) bool {
+	var (
+		err error
+	)
+
 	fqdn = strings.ToLower(strings.TrimSpace(fqdn))
 
-	if IsIPAddr(fqdn) || IsDomain(fqdn) || strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") || strings.Contains(fqdn, ":") || strings.Contains(fqdn, "\\") {
-		return false
-	}
+	if fqdn, err = ToPunycode(fqdn); err == nil {
+		if IsIPAddr(fqdn) || IsDomain(fqdn) ||
+			strings.Contains(fqdn, "/") || strings.Contains(fqdn, "@") ||
+			strings.Contains(fqdn, ":") || strings.Contains(fqdn, "\\") {
+			return false
+		}
 
-	if domain := DomainFromFqdn(fqdn); domain != "" {
-		i := strings.LastIndex(fqdn, domain)
-		if fqdn[:i] != "" {
-			return true
+		if domain := DomainFromFqdn(fqdn); domain != "" {
+			i := strings.LastIndex(fqdn, domain)
+			if fqdn[:i] != "" {
+				return true
+			} else {
+				fmt.Printf("Und raus! %s\n", fqdn)
+			}
 		}
 	}
 
@@ -30,9 +36,11 @@ func IsFQDN(fqdn string) bool {
 
 // DomainFromFqdn returns domain name or empty string
 func DomainFromFqdn(fqdn string) string {
-	fqdn = strings.TrimSpace(fqdn)
-	fqdn = strings.ToLower(fqdn)
-	domain := ""
+	var (
+		domain string
+	)
+
+	fqdn = strings.ToLower(strings.TrimSpace(fqdn))
 
 	if !IsIPAddr(fqdn) && !IsDomain(fqdn) {
 		for _, s := range PublicSuffix {
@@ -48,28 +56,4 @@ func DomainFromFqdn(fqdn string) string {
 	}
 
 	return domain
-}
-
-// FQDNToUnicode returns  domain name as Unicode
-func FQDNToUnicode(fqdn string) (string, error) {
-	fqdn = strings.TrimSpace(fqdn)
-	fqdn = strings.ToLower(fqdn)
-
-	if !IsFQDN(fqdn) {
-		return "", errors.New("invalid FQDN")
-	}
-
-	return idna.ToUnicode(fqdn)
-}
-
-// FQDNToPunycode returns domain name as Punycode
-func FQDNToPunycode(fqdn string) (string, error) {
-	fqdn = strings.TrimSpace(fqdn)
-	fqdn = strings.ToLower(fqdn)
-
-	if !IsFQDN(fqdn) {
-		return "", errors.New("invalid FQDN")
-	}
-
-	return idna.ToASCII(fqdn)
 }
