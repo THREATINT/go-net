@@ -1,5 +1,3 @@
-// Package net contains helper function for handling
-// e.g. ip addresses or domain names
 package net
 
 import "testing"
@@ -11,16 +9,16 @@ func TestIsFqdn(t *testing.T) {
 	}{
 		{"www.company.com", true},
 		{"*.company.com", true},
-		{"company.com", false},
+		{"company.com", false}, // -> domain
 		{"www.de.company.com", true},
 		{"www_de.company.com", true},
 		{"www-de.company.com", true},
-		{"www.de.company.com/newsticker", false},
-		{"1.2.3.4", false},
+		{"www.de.company.com/newsticker", false}, // -> URL
+		{"1.2.3.4", false},                       // -> IP address
 		{"612050612050612050612050612050612050-dot-onk89909.wn.r.appspot.com", true},
 		{"9876543456886756565656-secondary.z19.web.core.windows.net", true},
-		{"президент.рф", false},                 // kremlin.ru (unicode)
-		{"xn--d1abbgf6aiiy.xn--p1ai", false},    // kremlin.ru (punycode)
+		{"президент.рф", false},                 // kremlin.ru (unicode) -> domain
+		{"xn--d1abbgf6aiiy.xn--p1ai", false},    // kremlin.ru (punycode) -> domain
 		{"www.президент.рф", true},              // www.kremlin.ru (unicode)
 		{"www.xn--d1abbgf6aiiy.xn--p1ai", true}, // www.kremlin.ru (punycode)
 	}
