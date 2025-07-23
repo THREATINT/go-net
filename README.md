@@ -14,15 +14,15 @@ We have received feedback from software developers who were confused about how t
 specific cases. Examples include but are not limited to:
 * URLs:
   * We consider URLs that do not have a scheme as valid. 
-  This is a clear violation of [RFC#3986](https://www.rfc-editor.org/rfc/rfc3986.txt) 
+  This is a clear violation of [RFC #3986](https://www.rfc-editor.org/rfc/rfc3986.txt) 
   that says *The scheme and path components are required, (...)*. 
   We are doing this because of several of our own use cases where we had to process large lists of URLs that did 
   not contain a scheme in each end every case. We neither wanted to add a scheme like `http://` by default nor simply 
-  reject entries. If you, however, need a URL that fully complies to RFC#3986 
-  (e.g. because you want to use it with other libraries), please call ```NormaliseURLSchema()```. 
+  reject entries. If you, however, need a URL that fully complies to RFC #3986 
+  (e.g. because you want to use it with other libraries), please call `NormaliseURLSchema()`.
 * Domains
   * To get an idea, what a valid domain name looks like, we use the list of TLDs (top-level-domains) from 
-  [IANA](https://data.iana.org/TLD/tlds-alpha-by-domain.txt). 
+  [PublicSuffixes.org]("https://publicsuffix.org/list/public_suffix_list.dat"). 
 * FQDNs
   * _www.site.tld_ **is not** a URL but a FQDN (fully qualified domain name), because it neither has a path component
   nor a schema (`http://`, `https://`, etc.). 
